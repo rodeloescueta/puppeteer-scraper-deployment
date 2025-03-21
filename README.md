@@ -149,6 +149,36 @@ The application is configured for CI/CD deployment to Render using GitHub Action
    - `API_KEYS=comma,separated,keys`
 4. Create a deploy hook and set it in GitHub Actions secret as `RENDER_DEPLOY_HOOK`
 
+## Browserbase Integration
+
+### Connection Settings
+
+The API uses Browserbase for remote browser automation. To configure Browserbase:
+
+1. Sign up for a Browserbase account at [browserbase.com](https://www.browserbase.com/)
+2. From your Browserbase dashboard, get your:
+   - Project ID: Located under the "Project ID" section
+   - API Key: Located under the "API Key" section
+3. Add these values to your `.env` file:
+   ```
+   BROWSERBASE_API_KEY=your_api_key_here
+   BROWSERBASE_PROJECT_ID=your_project_id_here
+   ```
+
+The application uses the official Browserbase SDK (@browserbasehq/sdk) to manage browser sessions.
+
+### Fallback Mode
+
+If there are issues connecting to Browserbase, the API can automatically fall back to mock browser mode:
+
+```
+# In your .env file
+USE_MOCK_BROWSER=false     # Try to use real Browserbase
+AUTO_FALLBACK_TO_MOCK=true # Fall back to mock if Browserbase fails
+```
+
+This allows your API to continue functioning even when Browserbase is unavailable.
+
 ## License
 
 MIT

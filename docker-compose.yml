@@ -15,6 +15,7 @@ services:
       - LOG_LEVEL=info
       - USE_MOCK_BROWSER=${USE_MOCK_BROWSER:-false}
       - BROWSERBASE_API_KEY=${BROWSERBASE_API_KEY}
+      - BROWSERBASE_PROJECT_ID=${BROWSERBASE_PROJECT_ID}
       - API_KEYS=${API_KEYS}
     volumes:
       - ./logs:/usr/src/app/logs

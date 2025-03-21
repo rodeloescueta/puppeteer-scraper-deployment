@@ -3,6 +3,7 @@ const { validateCryptoRequest } = require("../middleware/validators");
 const { apiKeyAuth } = require("../middleware/auth");
 const cryptoScraperService = require("../services/cryptoScraper");
 const logger = require("../utils/logger");
+const config = require("../config");
 
 const router = express.Router();
 
@@ -12,12 +13,13 @@ const router = express.Router();
  */
 router.post("/", apiKeyAuth, validateCryptoRequest, async (req, res) => {
   try {
-    const { electricityCost } = req.body;
+    // Use the provided electricityCost or fallback to the default value
+    const electricityCost =
+      req.body.electricityCost ||
+      config.scraperDefaults.crypto.defaultElectricityCost;
 
     logger.info(
-      `Received crypto scraping request${
-        electricityCost ? ` with electricityCost: ${electricityCost}` : ""
-      }`
+      `Received crypto scraping request with electricityCost: ${electricityCost}`
     );
 
     const result = await cryptoScraperService.scrapeData(electricityCost);

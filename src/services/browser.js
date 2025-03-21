@@ -1,4 +1,5 @@
 const puppeteer = require("puppeteer-core");
+const Browserbase = require("@browserbasehq/sdk").default;
 const logger = require("../utils/logger");
 const config = require("../config");
 
@@ -63,12 +64,19 @@ class BrowserService {
   constructor() {
     this.activeConnections = 0;
     this.maxConnections = 3; // Browserbase limit
+    this.bb = null;
   }
 
   /**
    * Connect to Browserbase and return a browser instance
    */
   async connect() {
+    // Debug logging
+    logger.info(`Config useMockBrowser value: ${config.useMockBrowser}`);
+    logger.info(
+      `Environment USE_MOCK_BROWSER: ${process.env.USE_MOCK_BROWSER}`
+    );
+
     // Use mock browser in development if enabled
     if (config.useMockBrowser) {
       logger.info("Using mock browser instead of Browserbase");
@@ -85,17 +93,40 @@ class BrowserService {
     try {
       logger.info("Connecting to Browserbase...");
 
-      // Validate API key
-      if (
-        !config.browserbaseApiKey ||
-        config.browserbaseApiKey === "your_browserbase_key"
-      ) {
-        throw new Error("Browserbase API key not configured");
+      // Validate API key and project ID
+      if (!config.browserbaseApiKey || !config.browserbaseProjectId) {
+        throw new Error("Browserbase API key or Project ID not configured");
       }
 
-      // Connect to Browserbase
+      logger.info(
+        `Using Browserbase API Key: ${config.browserbaseApiKey.substring(
+          0,
+          10
+        )}... (partially hidden)`
+      );
+      logger.info(
+        `Using Browserbase Project ID: ${config.browserbaseProjectId}`
+      );
+
+      // Initialize Browserbase client
+      if (!this.bb) {
+        this.bb = new Browserbase({
+          apiKey: config.browserbaseApiKey,
+        });
+        logger.info("Browserbase client initialized");
+      }
+
+      // Create a new session
+      logger.info("Creating Browserbase session...");
+      const session = await this.bb.sessions.create({
+        projectId: config.browserbaseProjectId,
+      });
+      logger.info(`Session created with ID: ${session.id}`);
+
+      // Connect to the session
+      logger.info(`Connecting to session via: ${session.connectUrl}`);
       const browser = await puppeteer.connect({
-        browserWSEndpoint: `wss://chrome.browserbase.com?token=${config.browserbaseApiKey}`,
+        browserWSEndpoint: session.connectUrl,
       });
 
       this.activeConnections++;
@@ -114,6 +145,14 @@ class BrowserService {
       return browser;
     } catch (error) {
       logger.error(`Failed to connect to Browserbase: ${error.message}`);
+      logger.error(`Stack trace: ${error.stack}`);
+
+      // Fall back to mock browser if connection fails
+      if (!config.useMockBrowser && config.autoFallbackToMock) {
+        logger.info("Falling back to mock browser due to connection error");
+        return new MockBrowser();
+      }
+
       throw error;
     }
   }

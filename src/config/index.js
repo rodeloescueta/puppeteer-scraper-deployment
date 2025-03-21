@@ -7,10 +7,12 @@ module.exports = {
   logLevel: process.env.LOG_LEVEL || "info",
 
   // Feature flags
-  useMockBrowser: process.env.USE_MOCK_BROWSER === "true" || false,
+  useMockBrowser: process.env.USE_MOCK_BROWSER === "true",
+  autoFallbackToMock: process.env.AUTO_FALLBACK_TO_MOCK !== "false",
 
   // Browserbase configuration
   browserbaseApiKey: process.env.BROWSERBASE_API_KEY,
+  browserbaseProjectId: process.env.BROWSERBASE_PROJECT_ID,
 
   // Authentication
   apiKeys: process.env.API_KEYS
