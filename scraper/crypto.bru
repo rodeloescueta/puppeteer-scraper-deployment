@@ -1,0 +1,21 @@
+meta {
+  name: crypto
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/api/crypto
+  body: json
+  auth: none
+}
+
+headers {
+  X-API-Key: test-key-1
+}
+
+body:json {
+  {
+    "electricityCost": "0.05"
+  }
+}

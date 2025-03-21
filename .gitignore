@@ -38,3 +38,4 @@ docker-compose.override.yml
 .cursor/
 .cursorrules
 TASK.md 
+DEV_NOTE.md 

@@ -1,0 +1,22 @@
+meta {
+  name: text
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:3000/api/text
+  body: json
+  auth: none
+}
+
+headers {
+  X-API-Key: test-key-1
+}
+
+body:json {
+  {
+    "url": "https://en.wikipedia.org/wiki/New_Jersey_Swimming", // Required - URL to extract text from
+    "includeHtml": false // Optional - Include HTML content in response
+  }
+}

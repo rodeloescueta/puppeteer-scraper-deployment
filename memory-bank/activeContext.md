@@ -27,6 +27,7 @@ We are in the implementation phase of the Puppeteer Scraper API project. The foc
 - Created docker-compose.dev.yml and Dockerfile.dev for improved local development
 - Implemented the `/text` endpoint with Mozilla Readability for clean text extraction
 - Added URL validation and option to include HTML content in text extraction
+- Created simple API documentation in api.md file
 
 ## Active Decisions and Considerations
 
@@ -51,6 +52,20 @@ We are in the implementation phase of the Puppeteer Scraper API project. The foc
    - Best approach for error handling for scraping failures
    - Future endpoints beyond the crypto and text endpoints
 
+## API Testing Tools
+
+For testing the API endpoints, we are using:
+
+**Bruno API Tester** ✅:
+
+- Modern, open-source API client
+- Simple interface for creating and organizing API requests
+- Supports environment variables and request collections
+- Version-controlled collections that can be shared with the team
+- Integrated with Git for collaboration
+
+For API documentation, we maintain a simple `api.md` file in the project root that documents all available endpoints, their parameters, and example requests/responses.
+
 ## Next Steps
 
 1. **Immediate Tasks**:
@@ -58,7 +73,8 @@ We are in the implementation phase of the Puppeteer Scraper API project. The foc
    - ✅ Set up Browserbase account and integrate API key (completed)
    - ✅ Test the crypto endpoint with real browser integration (completed)
    - ✅ Add the text extraction endpoint (completed)
-   - Test the text extraction endpoint
+   - ✅ Test the text extraction endpoint (completed)
+   - ✅ Document API testing tools and procedures (completed)
    - Enhance error handling for production
 
 2. **Short-term Tasks**:

@@ -38,8 +38,8 @@ app.use(limiter);
 // Routes
 app.use("/", docsRoutes);
 app.use("/health", healthRoutes);
-app.use("/crypto", cryptoRoutes);
-app.use("/text", textRoutes);
+app.use("/api/crypto", cryptoRoutes);
+app.use("/api/text", textRoutes);
 
 // 404 handler
 app.use((req, res) => {

@@ -30,14 +30,14 @@ jest.mock("../src/services/browser", () => ({
 
 describe("Crypto Endpoint", () => {
   it("should return 401 when no API key is provided", async () => {
-    const response = await request(app).post("/crypto");
+    const response = await request(app).post("/api/crypto");
     expect(response.statusCode).toBe(401);
     expect(response.body.error).toBe("Authentication failed");
   });
 
   it("should return 401 with invalid API key", async () => {
     const response = await request(app)
-      .post("/crypto")
+      .post("/api/crypto")
       .set("X-API-Key", "invalid-key");
     expect(response.statusCode).toBe(401);
     expect(response.body.error).toBe("Authentication failed");
@@ -46,7 +46,7 @@ describe("Crypto Endpoint", () => {
   it("should accept valid request with API key", async () => {
     // Using a key from config
     const response = await request(app)
-      .post("/crypto")
+      .post("/api/crypto")
       .set("X-API-Key", "test-key-1")
       .send({ electricityCost: "0.05" });
 

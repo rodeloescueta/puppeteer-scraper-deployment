@@ -84,14 +84,14 @@ router.get("/", (req, res) => {
     </div>
 
     <div class="endpoint">
-      <h3><span class="method">POST</span> /crypto</h3>
+      <h3><span class="method">POST</span> /api/crypto</h3>
       <p>Scrape crypto mining data from ASIC miner value with a customizable electricity cost.</p>
       <h4>Request Parameters:</h4>
       <pre><code>{
   "electricityCost": "0.05"  // Optional, defaults to 0.0675
 }</code></pre>
       <h4>Example Request:</h4>
-      <pre><code>curl -X POST http://localhost:3000/crypto \\
+      <pre><code>curl -X POST http://localhost:3000/api/crypto \\
   -H "Content-Type: application/json" \\
   -H "X-API-Key: your-api-key" \\
   -d '{"electricityCost": "0.05"}'</code></pre>
@@ -107,7 +107,7 @@ router.get("/", (req, res) => {
     </div>
 
     <div class="endpoint">
-      <h3><span class="method">POST</span> /text</h3>
+      <h3><span class="method">POST</span> /api/text</h3>
       <p>Extract readable text content from a webpage, similar to browser reader view.</p>
       <h4>Request Parameters:</h4>
       <pre><code>{
@@ -115,7 +115,7 @@ router.get("/", (req, res) => {
   "includeHtml": false                   // Optional, set to true to include HTML content
 }</code></pre>
       <h4>Example Request:</h4>
-      <pre><code>curl -X POST http://localhost:3000/text \\
+      <pre><code>curl -X POST http://localhost:3000/api/text \\
   -H "Content-Type: application/json" \\
   -H "X-API-Key: your-api-key" \\
   -d '{"url": "https://example.com/article"}'</code></pre>

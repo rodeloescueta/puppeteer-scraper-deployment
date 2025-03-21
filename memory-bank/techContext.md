@@ -127,3 +127,133 @@ API_KEYS=key1,key2,key3
 - Advanced user management and authentication
 - Caching mechanisms for improved performance
 - Horizontal scaling with load balancing
+
+## API Endpoints Documentation
+
+### Crypto Mining Data Endpoint
+
+**Endpoint:** `POST /crypto`
+
+**Description:** Scrapes crypto mining profitability data from asicminervalue.com for a specific ASIC miner, using a configurable electricity cost parameter.
+
+**Authentication:** Requires API key in the `X-API-Key` header.
+
+**Request Parameters:**
+
+```json
+{
+  "electricityCost": "0.05" // Optional - Cost of electricity in USD per kWh
+}
+```
+
+**Example Request:**
+
+```bash
+curl -X POST http://localhost:3000/crypto \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: your-api-key" \
+  -d '{"electricityCost": "0.05"}'
+```
+
+**Example Response:**
+
+```json
+{
+  "success": true,
+  "content": "Antminer L9 (17Gh) profitability... [content truncated for brevity]",
+  "timestamp": "2025-03-21T10:41:03.642Z",
+  "parameters": {
+    "electricityCost": "0.05"
+  }
+}
+```
+
+**Default Parameter:**
+
+If no `electricityCost` is provided, the API uses a default value of `0.0675`.
+
+**Error Handling:**
+
+- 400 Bad Request: Invalid parameter format
+- 401 Unauthorized: Invalid or missing API key
+- 500 Internal Server Error: Scraping or processing failed
+
+**Implementation Details:**
+
+- Uses Puppeteer through Browserbase to load the webpage
+- Automates form interaction to update electricity cost
+- Waits for page calculations to update after input
+- Extracts the updated page content
+- Supports automatic fallback to mock browser for development
+
+### Text Extraction Endpoint
+
+**Endpoint:** `POST /text`
+
+**Description:** Extracts readable content from a web page, similar to browser reader mode. Uses Mozilla's Readability library to parse HTML and extract the main content, title, and other metadata.
+
+**Authentication:** Requires API key in the `X-API-Key` header.
+
+**Request Parameters:**
+
+```json
+{
+  "url": "https://example.com/article", // Required - URL to extract text from
+  "includeHtml": false // Optional - Include HTML content in response
+}
+```
+
+**Example Request:**
+
+```bash
+curl -X POST http://localhost:3000/text \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: your-api-key" \
+  -d '{"url": "https://example.com/article"}'
+```
+
+**Example Response:**
+
+```json
+{
+  "success": true,
+  "url": "https://example.com/article",
+  "title": "Example Domain",
+  "byline": "Author Name",
+  "content": "This domain is for use in illustrative examples in documents. You may use this domain in literature without prior coordination or asking for permission.",
+  "timestamp": "2025-03-21T10:56:15.562Z",
+  "length": 191,
+  "excerpt": "This domain is for use in illustrative examples..."
+}
+```
+
+**With HTML Content:**
+
+When `includeHtml` is set to `true`, the response includes an additional `contentHtml` field:
+
+```json
+{
+  "success": true,
+  "url": "https://example.com",
+  "title": "Example Domain",
+  "content": "This domain is for use in illustrative examples...",
+  "contentHtml": "<div><p>This domain is for use in illustrative examples...</p></div>",
+  "timestamp": "2025-03-21T10:57:07.719Z",
+  "length": 191,
+  "excerpt": "This domain is for use in illustrative examples..."
+}
+```
+
+**Error Handling:**
+
+- 400 Bad Request: Invalid URL or missing required parameters
+- 401 Unauthorized: Invalid or missing API key
+- 500 Internal Server Error: Scraping or processing failed
+
+**Implementation Details:**
+
+- Uses Puppeteer through Browserbase to load the webpage
+- Applies Mozilla's Readability algorithm to extract content
+- Supports automatic fallback to mock browser for development
+- Validates URL format before processing
+- Includes content length and excerpt for preview purposes
