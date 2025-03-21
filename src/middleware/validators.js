@@ -24,6 +24,31 @@ function validateCryptoRequest(req, res, next) {
   next();
 }
 
+/**
+ * Validate text extractor request body
+ */
+function validateTextRequest(req, res, next) {
+  const schema = Joi.object({
+    url: Joi.string().uri().required(),
+    includeHtml: Joi.boolean().default(false).optional(),
+  });
+
+  const { error, value } = schema.validate(req.body);
+
+  if (error) {
+    logger.warn(`Invalid text extraction request: ${error.message}`);
+    return res.status(400).json({
+      error: "Validation error",
+      message: error.message,
+    });
+  }
+
+  // Make validated values available
+  req.body = value;
+  next();
+}
+
 module.exports = {
   validateCryptoRequest,
+  validateTextRequest,
 };

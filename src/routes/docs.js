@@ -106,6 +106,32 @@ router.get("/", (req, res) => {
 }</code></pre>
     </div>
 
+    <div class="endpoint">
+      <h3><span class="method">POST</span> /text</h3>
+      <p>Extract readable text content from a webpage, similar to browser reader view.</p>
+      <h4>Request Parameters:</h4>
+      <pre><code>{
+  "url": "https://example.com/article",  // Required, must be a valid URL
+  "includeHtml": false                   // Optional, set to true to include HTML content
+}</code></pre>
+      <h4>Example Request:</h4>
+      <pre><code>curl -X POST http://localhost:3000/text \\
+  -H "Content-Type: application/json" \\
+  -H "X-API-Key: your-api-key" \\
+  -d '{"url": "https://example.com/article"}'</code></pre>
+      <h4>Example Response:</h4>
+      <pre><code>{
+  "success": true,
+  "url": "https://example.com/article",
+  "title": "Article Title",
+  "byline": "Author Name",
+  "content": "The extracted text content without HTML tags...",
+  "timestamp": "2023-01-01T00:00:00.000Z",
+  "length": 1234,
+  "excerpt": "A short excerpt from the beginning of the article..."
+}</code></pre>
+    </div>
+
     <footer>
       <p>© 2023 Puppeteer Scraper API</p>
     </footer>

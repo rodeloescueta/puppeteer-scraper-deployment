@@ -24,6 +24,7 @@
 - Browserbase SDK integration with Project ID and API key configuration
 - Automatic fallback to mock browser when Browserbase is unavailable
 - Enhanced development environment with docker-compose.dev.yml and Dockerfile.dev
+- `/text` endpoint with Mozilla Readability integration
 
 ## What's Left to Build
 
@@ -52,10 +53,11 @@
   - [x] Test with real Browserbase integration
   - [x] Parse and format response data
 
-- [ ] "/text" endpoint
-  - [ ] Create URL content extractor
-  - [ ] Integrate Mozilla Readability
-  - [ ] Implement text cleaning and formatting
+- [x] "/text" endpoint
+  - [x] Create URL content extractor
+  - [x] Integrate Mozilla Readability
+  - [x] Implement text cleaning and formatting
+  - [ ] Test with real Browserbase
 
 ### Infrastructure & DevOps
 
@@ -76,7 +78,7 @@
 | Documentation               | 1-2 days           | 🟢 In Progress |
 | Deployment                  | 1 day              | 🔶 Started     |
 
-**Total Estimated Time**: 3-5 days remaining
+**Total Estimated Time**: 2-3 days remaining
 
 ## Known Issues
 
@@ -84,12 +86,12 @@
 
 ## Next Milestone
 
-**Implement Text Extraction Endpoint**
+**Test and Optimize Text Extraction Endpoint**
 
-- Create URL content extractor
-- Integrate Mozilla Readability
-- Implement text cleaning and formatting
-- Test with real Browserbase
+- Test text extraction with various website types
+- Optimize performance for large pages
+- Fine-tune Readability parameters if needed
+- Deploy with updated documentation
 
 **Target Completion**: End of current development week
 

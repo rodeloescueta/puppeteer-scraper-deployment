@@ -11,6 +11,7 @@ const logger = require("./utils/logger");
 const docsRoutes = require("./routes/docs");
 const healthRoutes = require("./routes/health");
 const cryptoRoutes = require("./routes/crypto");
+const textRoutes = require("./routes/text");
 
 // Create Express app
 const app = express();
@@ -38,6 +39,7 @@ app.use(limiter);
 app.use("/", docsRoutes);
 app.use("/health", healthRoutes);
 app.use("/crypto", cryptoRoutes);
+app.use("/text", textRoutes);
 
 // 404 handler
 app.use((req, res) => {
