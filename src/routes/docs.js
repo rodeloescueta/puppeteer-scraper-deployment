@@ -133,7 +133,7 @@ router.get("/", (req, res) => {
     </div>
 
     <footer>
-      <p>© 2023 Puppeteer Scraper API</p>
+      <p>© 2025 Puppeteer Scraper API</p>
     </footer>
   </body>
   </html>
