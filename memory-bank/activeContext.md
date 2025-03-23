@@ -46,6 +46,7 @@ We are in the implementation phase of the Puppeteer Scraper API project. The foc
    - Mock browser pattern for development
    - Middleware pattern for request handling and authentication
    - Fallback mechanism to mock browser when Browserbase is unavailable
+   - Render's built-in auto-deploy for continuous deployment (can be skipped with `[skip render]` in commit messages)
 
 3. **Open Questions**:
    - How to optimize Browserbase usage for production with the 3 concurrent session limit
