@@ -120,6 +120,7 @@ class BrowserService {
       logger.info("Creating Browserbase session...");
       const session = await this.bb.sessions.create({
         projectId: config.browserbaseProjectId,
+        region: "eu-central-1",
       });
       logger.info(`Session created with ID: ${session.id}`);
 
